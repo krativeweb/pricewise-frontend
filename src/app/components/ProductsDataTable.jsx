@@ -88,7 +88,7 @@ const ProductsDataTable = () => {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('https://pricewise-scraper-v2.vercel.app/api/products');
+      const response = await axios.get('https://pricewise-scraper-v2-2.onrender.com/api/products');
       if (response.data.success) {
         setProducts(response.data.data);
         setFilteredProducts(response.data.data);
@@ -128,7 +128,7 @@ const ProductsDataTable = () => {
     setLoading(true);
     setMessage('');
     try {
-      const response = await axios.get('https://pricewise-scraper-v2.vercel.app/api/scrape');
+      const response = await axios.get('https://pricewise-scraper-v2-2.onrender.com/api/scrape');
       if (response.data.success) {
         setMessage(response.data.message);
         await fetchProducts();
@@ -148,7 +148,7 @@ const ProductsDataTable = () => {
     setLoading(true);
     setMessage('');
     try {
-      const response = await axios.delete('https://pricewise-scraper-v2.vercel.app/api/products');
+      const response = await axios.delete('https://pricewise-scraper-v2-2.onrender.com/api/products');
       if (response.data.success) {
         setProducts([]);
         setFilteredProducts([]);
