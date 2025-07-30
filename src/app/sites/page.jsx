@@ -83,44 +83,7 @@ export default function SitesPage() {
         </table>
       </div>
 
-      {/* Products Table */}
-      <div>
-        <h2 className="text-xl font-semibold mb-2 flex justify-between">
-          <span>Products ({products.length})</span>
-          <button onClick={truncateProducts} className="text-sm bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
-            Delete All
-          </button>
-        </h2>
-        {productLoading ? (
-          <p>Loading products...</p>
-        ) : (
-          <table className="w-full border border-gray-300 text-sm">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="p-2 border">ID</th>
-                <th className="p-2 border">Title</th>
-                <th className="p-2 border">Price</th>
-                <th className="p-2 border">Source</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.map(product => (
-                <tr key={product.id}>
-                  <td className="p-2 border">{product.id}</td>
-                  <td className="p-2 border">{product.title}</td>
-                  <td className="p-2 border">{product.price}</td>
-                  <td className="p-2 border">{product.source}</td>
-                </tr>
-              ))}
-              {products.length === 0 && (
-                <tr>
-                  <td colSpan="4" className="text-center p-4 text-gray-500">No products scraped</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        )}
-      </div>
+  
     </div>
   );
 }
