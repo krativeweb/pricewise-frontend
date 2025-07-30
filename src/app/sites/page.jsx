@@ -22,13 +22,6 @@ export default function SitesPage() {
     if (json.success) setSites(json.data);
   }
 
-  async function fetchProducts() {
-    setProductLoading(true);
-    const res = await fetch(`${backendBase}/api/products`);
-    const json = await res.json();
-    if (json.success) setProducts(json.data);
-    setProductLoading(false);
-  }
 
   async function syncSite(id) {
     if (!confirm('Sync this site?')) return;
