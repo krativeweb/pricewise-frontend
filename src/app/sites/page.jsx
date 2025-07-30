@@ -4,41 +4,37 @@ import { useEffect, useState } from 'react';
 
 export default function SitesPage() {
   const [sites, setSites] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [syncingId, setSyncingId] = useState(null);
-  const [productLoading, setProductLoading] = useState(false);
 
   useEffect(() => {
     fetchSites();
-    fetchProducts();
   }, []);
 
-  const backendBase = 'pricewise-scraper-v2.vercel.app';
+  const backendBase = 'https://pricewise-scraper-v2.vercel.app'; // ✅ ensure full URL with https
 
   async function fetchSites() {
-    const res = await fetch(`${backendBase}/api/sites`);
-    const json = await res.json();
-    if (json.success) setSites(json.data);
+    try {
+      const res = await fetch(`${backendBase}/api/sites`);
+      const json = await res.json();
+      if (json.success) setSites(json.data);
+    } catch (err) {
+      console.error('Failed to fetch sites:', err);
+    }
   }
-
 
   async function syncSite(id) {
     if (!confirm('Sync this site?')) return;
     setSyncingId(id);
-    const res = await fetch(`${backendBase}/api/scrape/${id}`);
-    const json = await res.json();
-    alert(json.message);
-    setSyncingId(null);
-    fetchProducts(); // refresh product table
-  }
-
-  async function truncateProducts() {
-    if (!confirm('Are you sure you want to delete all products?')) return;
-    const res = await fetch(`${backendBase}/api/products`, { method: 'DELETE' });
-    const json = await res.json();
-    alert(json.message);
-    fetchProducts();
+    try {
+      const res = await fetch(`${backendBase}/api/scrape/${id}`);
+      const json = await res.json();
+      alert(json.message || 'Sync completed');
+    } catch (err) {
+      alert('Failed to sync site');
+      console.error(err);
+    } finally {
+      setSyncingId(null);
+    }
   }
 
   return (
@@ -82,8 +78,6 @@ export default function SitesPage() {
           </tbody>
         </table>
       </div>
-
-  
     </div>
   );
 }
