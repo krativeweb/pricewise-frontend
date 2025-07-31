@@ -31,8 +31,8 @@ const ProductsDataTable = () => {
       sortable: true,
       width: '120px',
       format: row => {
-        const price = parseFloat(row.price.replace('$', ''));
-        return isNaN(price) ? 'N/A' : `$${price.toFixed(2)}`;
+        const price =row.price;
+        return isNaN(price) ;
       },
     },
     {
