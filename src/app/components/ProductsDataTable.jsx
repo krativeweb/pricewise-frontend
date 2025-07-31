@@ -29,7 +29,7 @@ const ProductsDataTable = () => {
   name: 'Price',
   selector: row => row.price,
   sortable: true,
-  width: '170px',
+  width: '200px',
   format: row => row.price
 },
     {
@@ -70,7 +70,7 @@ const ProductsDataTable = () => {
       selector: row => row.description,
       sortable: true,
       wrap: true,
-      maxWidth: '300px',
+      maxWidth: '200px',
     },
     {
       name: 'Specs',
