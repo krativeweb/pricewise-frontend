@@ -29,7 +29,7 @@ const ProductsDataTable = () => {
   name: 'Price',
   selector: row => row.price,
   sortable: true,
-  width: '120px',
+  width: '170px',
   format: row => row.price
 },
     {
