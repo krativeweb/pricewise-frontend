@@ -105,10 +105,7 @@ const ProductsDataTable = () => {
 
   // Poll every 10 seconds
   useEffect(() => {
-    fetchProducts(); // Initial fetch
-    const interval = setInterval(() => {
-      fetchProducts();
-    }, 10000); // 10 seconds
+    fetchProducts(); 
 
     // Cleanup interval on component unmount
     return () => clearInterval(interval);
