@@ -104,11 +104,12 @@ const ProductsDataTable = () => {
   };
 
   // Poll every 10 seconds
-  useEffect(() => {
-    fetchProducts(); 
+useEffect(() => {
+    const interval = setInterval(() => {
+      fetchProducts(); // call the function repeatedly
+    }, 5000); // every 5 seconds
 
-    // Cleanup interval on component unmount
-    return () => clearInterval(interval);
+    return () => clearInterval(interval); // cleanup on unmount
   }, []);
 
   // Filter products based on search term
