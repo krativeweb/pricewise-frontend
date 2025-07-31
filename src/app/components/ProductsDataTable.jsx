@@ -25,16 +25,13 @@ const ProductsDataTable = () => {
       sortable: true,
       wrap: true,
     },
-    {
-      name: 'Price',
-      selector: row => row.price,
-      sortable: true,
-      width: '120px',
-      format: row => {
-        const price =row.price;
-        return isNaN(price) ;
-      },
-    },
+ {
+  name: 'Price',
+  selector: row => row.price,
+  sortable: true,
+  width: '120px',
+  format: row => row.price
+},
     {
       name: 'Source',
       selector: row => row.source,
