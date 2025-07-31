@@ -126,7 +126,7 @@ useEffect(() => {
     setLoading(true);
     setMessage('');
     try {
-      const response = await axios.get('https://pricewise-scraper-v2-2.onrender.com/api/scrape');
+      const response = await axios.get('https://pricewise-scraper-v2.vercel.app/api/scrape');
       if (response.data.success) {
         setMessage(response.data.message);
         await fetchProducts();
