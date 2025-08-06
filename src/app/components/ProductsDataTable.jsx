@@ -84,7 +84,7 @@ const ProductsDataTable = () => {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('https://pricewise-scraper-v2-2.onrender.com/api/products');
+      const response = await axios.get('https://pricewise-scraper-v2.vercel.app/api/products');
       if (response.data.success) {
         setProducts(response.data.data);
         setFilteredProducts(response.data.data);
