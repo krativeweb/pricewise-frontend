@@ -5,9 +5,9 @@ import axios from 'axios';
 export default function MatchThresholdForm() {
   const [threshold, setThreshold] = useState(75);
   const [loading, setLoading] = useState(true);
-
+  const backendBase = 'https://pricewise-scraper-v2.vercel.app';
   useEffect(() => {
-    axios.get('/api/settings/match-threshold').then(res => {
+    axios.get(`${backendBase}/api/settings/match-threshold`).then(res => {
       setThreshold(res.data.threshold);
       setLoading(false);
     });
@@ -15,7 +15,7 @@ export default function MatchThresholdForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post('/api/settings/match-threshold', { threshold });
+    await axios.post(`${backendBase}/api/settings/match-threshold`, { threshold });
     alert('Threshold updated!');
   };
 
@@ -38,3 +38,4 @@ export default function MatchThresholdForm() {
     </form>
   );
 }
+
