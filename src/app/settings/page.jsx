@@ -30,7 +30,7 @@ export default function MatchThresholdForm() {
   // Loader UI
   if (loading) {
     return (
-      <div className="bg-gradient-to-br from-gray-50 to-gray-200 p-6 md:p-8">
+      <div className="min-h-screen w-full bg-gradient-to-br from-gray-50 to-gray-200 p-6 md:p-8 flex justify-start items-start">
         <div className="bg-white shadow-2xl rounded-3xl p-8 w-full max-w-md">
           <div className="flex flex-col items-start">
             <svg
@@ -62,7 +62,7 @@ export default function MatchThresholdForm() {
 
   // Form UI
   return (
-    <div className="bg-gradient-to-br from-gray-50 to-gray-200 p-6 md:p-8">
+    <div className="min-h-screen w-full bg-gradient-to-br from-gray-50 to-gray-200 p-6 md:p-8 flex justify-start items-start">
       <div className="bg-white shadow-2xl rounded-3xl p-8 w-full max-w-md">
         <h2 className="text-4xl font-extrabold mb-10 text-gray-900">Match Score Threshold</h2>
 
