@@ -34,9 +34,9 @@ export default function AddSiteForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-start justify-start bg-gradient-to-br from-gray-50 to-gray-200 p-6 md:p-8">
-      <div className="bg-white shadow-2xl rounded-3xl p-8 w-full max-w-lg transition-all duration-300">
-        <h2 className="text-3xl font-extrabold mb-8 text-gray-900">Add New Site</h2>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 p-6 md:p-10">
+      <div className="bg-white shadow-2xl rounded-3xl p-8 w-full transition-all duration-300">
+        <h2 className="text-4xl font-extrabold mb-10 text-gray-900">Add New Site</h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Base URL */}
@@ -46,10 +46,10 @@ export default function AddSiteForm() {
               value={baseUrl}
               onChange={(e) => setBaseUrl(e.target.value)}
               placeholder=" "
-              className="peer border border-gray-200 rounded-xl w-full p-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all duration-200"
+              className="peer border border-gray-200 rounded-xl w-full p-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all duration-200 text-lg"
               required
             />
-            <label className="absolute left-4 top-4 text-gray-500 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-xs peer-focus:text-teal-600">
+            <label className="absolute left-4 top-4 text-gray-500 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-lg peer-focus:top-1 peer-focus:text-xs peer-focus:text-teal-600">
               Base URL
             </label>
           </div>
@@ -61,10 +61,10 @@ export default function AddSiteForm() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder=" "
-              className="peer border border-gray-200 rounded-xl w-full p-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all duration-200"
+              className="peer border border-gray-200 rounded-xl w-full p-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all duration-200 text-lg"
               required
             />
-            <label className="absolute left-4 top-4 text-gray-500 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-xs peer-focus:text-teal-600">
+            <label className="absolute left-4 top-4 text-gray-500 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-lg peer-focus:top-1 peer-focus:text-xs peer-focus:text-teal-600">
               Site Name
             </label>
           </div>
@@ -72,12 +72,12 @@ export default function AddSiteForm() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-teal-600 text-white py-3 rounded-xl font-semibold shadow-lg hover:bg-teal-700 transition-all duration-200 flex justify-center items-center"
+            className="w-full bg-teal-600 text-white py-4 rounded-xl font-semibold shadow-lg hover:bg-teal-700 transition-all duration-200 flex justify-center items-center text-lg"
             disabled={loading}
           >
             {loading ? (
               <svg
-                className="animate-spin h-5 w-5 text-white"
+                className="animate-spin h-6 w-6 text-white"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -104,12 +104,12 @@ export default function AddSiteForm() {
 
         {/* Alerts */}
         {success && (
-          <div className="mt-6 p-4 rounded-xl bg-teal-50 border border-teal-200 text-teal-800 animate-fade-in">
+          <div className="mt-8 p-4 rounded-xl bg-teal-50 border border-teal-200 text-teal-800 animate-fade-in text-lg">
             {success}
           </div>
         )}
         {error && (
-          <div className="mt-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 animate-fade-in">
+          <div className="mt-8 p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 animate-fade-in text-lg">
             {error}
           </div>
         )}
