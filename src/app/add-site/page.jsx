@@ -1,70 +1,86 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export default function AddSiteForm() {
   const [baseUrl, setBaseUrl] = useState('');
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState('');
-  const [error, setError] = useState('');
+  const [toast, setToast] = useState({ type: '', message: '' });
 
   const backendBase = 'https://pricewise-scraper-v2.vercel.app';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
-    setSuccess('');
+    setToast({ type: '', message: '' });
 
     try {
       const res = await axios.post(`${backendBase}/api/sites`, { baseUrl, name });
       if (res.data.success) {
-        setSuccess('✅ Site added successfully!');
+        setToast({ type: 'success', message: '✅ Site added successfully!' });
         setBaseUrl('');
         setName('');
       } else {
-        setError(res.data.message || 'Failed to add site');
+        setToast({ type: 'error', message: res.data.message || 'Failed to add site' });
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Server error');
+      setToast({ type: 'error', message: err.response?.data?.message || 'Server error' });
     }
 
     setLoading(false);
   };
 
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 p-4">
-      <div className="bg-white shadow-xl rounded-2xl p-6 w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Add New Site</h2>
+  // auto-hide toast after 3s
+  useEffect(() => {
+    if (toast.message) {
+      const timer = setTimeout(() => setToast({ type: '', message: '' }), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-6">
+      <div className="relative bg-white/30 backdrop-blur-xl shadow-2xl rounded-3xl p-8 w-full max-w-md border border-white/20">
+        {/* Heading */}
+        <h2 className="text-3xl font-extrabold mb-8 text-center text-white drop-shadow">
+          🚀 Add a New Site
+        </h2>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-6">
           {/* Base URL */}
           <div className="relative">
+            <span className="absolute left-3 top-3 text-gray-500">
+              🌐
+            </span>
             <input
               type="url"
               value={baseUrl}
               onChange={(e) => setBaseUrl(e.target.value)}
               placeholder=" "
-              className="peer border border-gray-300 rounded-lg w-full p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="peer pl-10 border border-white/40 bg-white/20 rounded-xl w-full p-3 text-white placeholder-transparent focus:outline-none focus:ring-2 focus:ring-pink-400 focus:bg-white/30 transition"
               required
             />
-            <label className="absolute left-3 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-xs peer-focus:text-green-600">
+            <label className="absolute left-10 top-3 text-white/70 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-white/50 peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-xs peer-focus:text-pink-300">
               Base URL
             </label>
           </div>
 
           {/* Site Name */}
           <div className="relative">
+            <span className="absolute left-3 top-3 text-gray-500">
+              🏷️
+            </span>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder=" "
-              className="peer border border-gray-300 rounded-lg w-full p-3 focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="peer pl-10 border border-white/40 bg-white/20 rounded-xl w-full p-3 text-white placeholder-transparent focus:outline-none focus:ring-2 focus:ring-pink-400 focus:bg-white/30 transition"
               required
             />
-            <label className="absolute left-3 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-xs peer-focus:text-green-600">
+            <label className="absolute left-10 top-3 text-white/70 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-white/50 peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-xs peer-focus:text-pink-300">
               Site Name
             </label>
           </div>
@@ -72,7 +88,7 @@ export default function AddSiteForm() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-green-500 text-white py-3 rounded-lg font-semibold shadow hover:bg-green-600 transition-colors flex justify-center items-center"
+            className="w-full bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white py-3 rounded-xl font-bold shadow-lg hover:shadow-pink-400/40 hover:scale-105 transition-transform flex justify-center items-center"
             disabled={loading}
           >
             {loading ? (
@@ -102,15 +118,13 @@ export default function AddSiteForm() {
           </button>
         </form>
 
-        {/* Alerts */}
-        {success && (
-          <div className="mt-4 p-3 rounded-lg bg-green-50 border border-green-300 text-green-700 text-center animate-fade-in">
-            {success}
-          </div>
-        )}
-        {error && (
-          <div className="mt-4 p-3 rounded-lg bg-red-50 border border-red-300 text-red-700 text-center animate-fade-in">
-            {error}
+        {/* Toast */}
+        {toast.message && (
+          <div
+            className={`fixed top-5 right-5 px-4 py-3 rounded-lg shadow-lg text-white font-medium animate-fade-in
+              ${toast.type === 'success' ? 'bg-green-500' : 'bg-red-500'}`}
+          >
+            {toast.message}
           </div>
         )}
       </div>
