@@ -39,7 +39,7 @@ export default function SitesPage() {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold">🧱 Scraper Dashboard</h1>
+      <h1 className="text-2xl font-bold">🧱 Website List</h1>
 
       {/* Sites Table */}
       <div>
@@ -81,3 +81,4 @@ export default function SitesPage() {
     </div>
   );
 }
+
