@@ -4,6 +4,32 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
 
+// Simple Tailwind loader component
+const Loader = () => (
+  <div className="flex justify-center items-center py-8">
+    <svg
+      className="animate-spin h-8 w-8 text-blue-500"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <circle
+        className="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="4"
+      ></circle>
+      <path
+        className="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8v8H4z"
+      ></path>
+    </svg>
+  </div>
+);
+
 const ProductsDataTable = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -11,8 +37,9 @@ const ProductsDataTable = () => {
   const [message, setMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
-   const backendBase = 'https://pricewise-scraper-v2.vercel.app';
-  // ✅ DataTable columns including wp_post_title & match_score
+  const backendBase = 'https://pricewise-scraper-v2.vercel.app';
+
+  // ✅ DataTable columns
   const columns = [
     {
       name: 'ID',
@@ -60,7 +87,7 @@ const ProductsDataTable = () => {
         <img
           src={row.image}
           alt={row.title}
-          className="w-16 h-16 object-cover"
+          className="w-16 h-16 object-cover rounded-md"
         />
       ),
       width: '100px',
@@ -94,20 +121,20 @@ const ProductsDataTable = () => {
     },
   ];
 
-  // Fetch matched products from backend API
+  // ✅ Fetch products
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${backendBase}/api/compare-products`); // 👈 your modified API route
+      const response = await axios.get(`${backendBase}/api/compare-products`);
       if (response.data.success) {
         setProducts(response.data.data);
         setFilteredProducts(response.data.data);
-        setMessage(`Loaded ${response.data.count} matched products`);
+        setMessage(`✅ Loaded ${response.data.count} matched products`);
       } else {
-        setMessage('Failed to load products');
+        setMessage('❌ Failed to load products');
       }
     } catch (error) {
-      setMessage(`Error: ${error.message}`);
+      setMessage(`⚠️ Error: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -117,7 +144,7 @@ const ProductsDataTable = () => {
     fetchProducts();
   }, []);
 
-  // Search filter (includes wp_post_title also)
+  // ✅ Search filter
   useEffect(() => {
     const filtered = products.filter(product =>
       ['title', 'source', 'description', 'specs', 'wp_post_title'].some(key =>
@@ -143,7 +170,7 @@ const ProductsDataTable = () => {
       {message && (
         <div
           className={`mb-4 p-2 rounded ${
-            message.includes('Error')
+            message.includes('Error') || message.includes('❌')
               ? 'bg-red-100 text-red-700'
               : 'bg-green-100 text-green-700'
           }`}
@@ -156,11 +183,11 @@ const ProductsDataTable = () => {
         columns={columns}
         data={filteredProducts}
         progressPending={loading}
+        progressComponent={<Loader />} {/* ✅ custom loader */}
         pagination
         highlightOnHover
         striped
         noDataComponent="No matched products found"
-        theme="default"
         customStyles={{
           table: {
             style: { border: '1px solid #e2e8f0' },
@@ -178,4 +205,3 @@ const ProductsDataTable = () => {
 };
 
 export default ProductsDataTable;
-
