@@ -11,6 +11,7 @@ const ProductsDataTable = () => {
   const [message, setMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
+   const backendBase = 'https://pricewise-scraper-v2.vercel.app';
   // ✅ DataTable columns including wp_post_title & match_score
   const columns = [
     {
@@ -97,7 +98,7 @@ const ProductsDataTable = () => {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('/api/compare-products'); // 👈 your modified API route
+      const response = await axios.get(`${backendBase}/api/compare-products`); // 👈 your modified API route
       if (response.data.success) {
         setProducts(response.data.data);
         setFilteredProducts(response.data.data);
@@ -177,3 +178,4 @@ const ProductsDataTable = () => {
 };
 
 export default ProductsDataTable;
+
