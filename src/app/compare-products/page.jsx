@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
 
-// Simple Tailwind loader component
+// ✅ Loader component
 const Loader = () => (
   <div className="flex justify-center items-center py-8">
     <svg
@@ -41,30 +41,10 @@ const ProductsDataTable = () => {
 
   // ✅ DataTable columns
   const columns = [
-    {
-      name: 'ID',
-      selector: row => row.id,
-      sortable: true,
-      width: '80px',
-    },
-    {
-      name: 'Title',
-      selector: row => row.title,
-      sortable: true,
-      wrap: true,
-    },
-    {
-      name: 'Price',
-      selector: row => row.price,
-      sortable: true,
-      width: '120px',
-    },
-    {
-      name: 'Source',
-      selector: row => row.source,
-      sortable: true,
-      width: '120px',
-    },
+    { name: 'ID', selector: row => row.id, sortable: true, width: '80px' },
+    { name: 'Title', selector: row => row.title, sortable: true, wrap: true },
+    { name: 'Price', selector: row => row.price, sortable: true, width: '120px' },
+    { name: 'Source', selector: row => row.source, sortable: true, width: '120px' },
     {
       name: 'URL',
       selector: row => row.url,
@@ -183,21 +163,15 @@ const ProductsDataTable = () => {
         columns={columns}
         data={filteredProducts}
         progressPending={loading}
-        progressComponent={<Loader />} {/* ✅ custom loader */}
+        progressComponent={<Loader />} 
         pagination
         highlightOnHover
         striped
         noDataComponent="No matched products found"
         customStyles={{
-          table: {
-            style: { border: '1px solid #e2e8f0' },
-          },
-          headRow: {
-            style: { backgroundColor: '#f7fafc', fontWeight: 'bold' },
-          },
-          cells: {
-            style: { border: '1px solid #e2e8f0', padding: '8px' },
-          },
+          table: { style: { border: '1px solid #e2e8f0' } },
+          headRow: { style: { backgroundColor: '#f7fafc', fontWeight: 'bold' } },
+          cells: { style: { border: '1px solid #e2e8f0', padding: '8px' } },
         }}
       />
     </div>
