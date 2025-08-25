@@ -4,11 +4,11 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
 
-// ✅ Loader component
+// ✅ Full page loader
 const Loader = () => (
-  <div className="flex justify-center items-center py-8">
+  <div className="fixed inset-0 flex justify-center items-center bg-white/70 z-50">
     <svg
-      className="animate-spin h-8 w-8 text-blue-500"
+      className="animate-spin h-12 w-12 text-blue-500"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
@@ -135,7 +135,10 @@ const ProductsDataTable = () => {
   }, [searchTerm, products]);
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 relative">
+      {/* ✅ Show loader full page */}
+      {loading && <Loader />}
+
       <div className="flex flex-col sm:flex-row justify-between mb-4 gap-4">
         <h1 className="text-2xl font-bold">Matched Products</h1>
         <input
@@ -162,8 +165,6 @@ const ProductsDataTable = () => {
       <DataTable
         columns={columns}
         data={filteredProducts}
-        progressPending={loading}
-        progressComponent={<Loader />} 
         pagination
         highlightOnHover
         striped
