@@ -39,65 +39,73 @@ const ProductsDataTable = () => {
 
   const backendBase = 'https://pricewise-scraper-v2.vercel.app';
 
-  // ✅ DataTable columns
+  // ✅ DataTable columns (as per new API)
   const columns = [
     { name: 'ID', selector: row => row.id, sortable: true, width: '80px' },
-    { name: 'Title', selector: row => row.title, sortable: true, wrap: true },
-    { name: 'Price', selector: row => row.price, sortable: true, width: '120px' },
-    { name: 'Source', selector: row => row.source, sortable: true, width: '120px' },
-    {
-      name: 'URL',
-      selector: row => row.url,
-      cell: row => (
-        <a
-          href={row.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-500 hover:underline"
-        >
-          Link
-        </a>
-      ),
-      width: '100px',
-    },
     {
       name: 'Image',
       selector: row => row.image,
       cell: row => (
         <img
           src={row.image}
-          alt={row.title}
+          alt={row.product_name_live}
           className="w-16 h-16 object-cover rounded-md"
         />
       ),
       width: '100px',
     },
-    {
-      name: 'Description',
-      selector: row => row.description,
-      sortable: true,
-      wrap: true,
-      maxWidth: '200px',
+    { 
+      name: 'Product Name (Live)', 
+      selector: row => row.product_name_live, 
+      sortable: true, 
+      wrap: true 
+    },
+  
+    { 
+      name: 'Price (Pricewise)', 
+      selector: row => row.price_pricewiseinsulation || 'N/A', 
+      width: '150px' 
     },
     {
-      name: 'Specs',
-      selector: row => row.specs || 'N/A',
-      sortable: true,
-      wrap: true,
-      maxWidth: '200px',
+      name: 'Link (Pricewise)',
+      selector: row => row.link_pricewiseinsulation,
+      cell: row =>
+        row.link_pricewiseinsulation ? (
+          <a
+            href={row.link_pricewiseinsulation}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:underline"
+          >
+            Visit
+          </a>
+        ) : (
+          'N/A'
+        ),
+      width: '150px',
+    },
+    { 
+      name: 'Price (NoGap)', 
+      selector: row => row.price_nogapinsulation || 'N/A', 
+      width: '150px' 
     },
     {
-      name: 'Matched WP Title',
-      selector: row => row.wp_post_title || 'N/A',
-      sortable: true,
-      wrap: true,
-      maxWidth: '200px',
-    },
-    {
-      name: 'Match Score',
-      selector: row => row.match_score,
-      sortable: true,
-      width: '120px',
+      name: 'Link (NoGap)',
+      selector: row => row.link_nogapinsulation,
+      cell: row =>
+        row.link_nogapinsulation ? (
+          <a
+            href={row.link_nogapinsulation}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:underline"
+          >
+            Visit
+          </a>
+        ) : (
+          'N/A'
+        ),
+      width: '150px',
     },
   ];
 
@@ -127,7 +135,7 @@ const ProductsDataTable = () => {
   // ✅ Search filter
   useEffect(() => {
     const filtered = products.filter(product =>
-      ['title', 'source', 'description', 'specs', 'wp_post_title'].some(key =>
+      ['product_name_live', 'price_pricewiseinsulation', 'price_nogapinsulation'].some(key =>
         product[key]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
